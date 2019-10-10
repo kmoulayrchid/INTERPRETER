@@ -18,9 +18,9 @@ public class CodeFormatterController {
 	private ICodeFormatter codeFormatter;
 	
 	@RequestMapping(value="/execute", method = RequestMethod.POST)
-	public String exec(@RequestBody CodeRequest codeRequest, HttpServletRequest httpRequest) {
+	public CodeResponse exec(@RequestBody CodeRequest codeRequest, HttpServletRequest httpRequest) {
 		CodeResponse codeResponse=new CodeResponse();
-		codeResponse.setResult(codeFormatter.saveCode(codeRequest.getCode(),httpRequest));
-		return codeResponse.getResult();
+		codeResponse.setResult(codeFormatter.saveCode(codeRequest.getCode(),httpRequest.getSession().getId()));
+		return codeResponse;
 	}
 }

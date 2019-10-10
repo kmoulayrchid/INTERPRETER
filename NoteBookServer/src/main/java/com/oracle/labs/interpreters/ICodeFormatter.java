@@ -4,5 +4,5 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface ICodeFormatter {
 	
-	public String saveCode(String code, HttpServletRequest httpRequest);
+	public String saveCode(String code, String sessionId);
 }

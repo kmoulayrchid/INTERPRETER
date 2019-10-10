@@ -12,8 +12,6 @@ public class NoteBookServerApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx=SpringApplication.run(NoteBookServerApplication.class, args);
-		InterpreterRepository interpreterRepository=ctx.getBean(InterpreterRepository.class);
-		interpreterRepository.save(new InterpreterEntity("print 1+1", "python", "%python print 1+1", "2","123456"));
 	}
 
 }

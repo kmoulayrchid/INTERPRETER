@@ -52,14 +52,14 @@ public class CodeFormatter implements ICodeFormatter {
 	}
 
 	@Override
-	public String saveCode(String code, HttpServletRequest httpRequest) {
+	public String saveCode(String code,String sessionId) {
 		InterpreterEntity entity = execute(code);
 		if (entity != null && !entity.getResult().equals("get Last Result")) {
 			if (entity.getResult().equals(""))
 				return "";
 			else {
-				entity.setSessionId(httpRequest.getSession().getId());
-				if(!entity.getResult().contains("Exception") && entity.getResult().equals("")) {
+				entity.setSessionId(sessionId);
+				if(!entity.getResult().contains("Exception") && !entity.getResult().equals("")) {
 					return interpreterRepository.save(entity).getResult();
 				}
 				else {
@@ -67,9 +67,9 @@ public class CodeFormatter implements ICodeFormatter {
 				}
 			}
 		} else {
-			List<InterpreterEntity> interpreterEntities=interpreterRepository.getLastBySession(httpRequest.getSession().getId());
+			List<InterpreterEntity> interpreterEntities=interpreterRepository.getLastBySession(sessionId);
 			if(interpreterEntities.size()>0) {
-				entity = interpreterRepository.getLastBySession(httpRequest.getSession().getId()).get(0);
+				entity = interpreterRepository.getLastBySession(sessionId).get(0);
 			}
 			return entity!=null?entity.getResult():"No result found";
 		}
