@@ -38,16 +38,22 @@ public class CodeFormatter implements ICodeFormatter {
 		StringBuilder result = new StringBuilder();
 		String language = getLanguage(code);
 		String formattedCode = formatCode(code);
+		entity = new InterpreterEntity();
+		entity.setLanguage(language);
+		entity.setBody(code);
+		entity.setCode(formattedCode);
+		entity.setCreationDate(new Date());
 		if (language.equals("python")) {
 			codeInterface = new JythonImpl();
 			result.append(codeInterface.executeCode(formattedCode));
-		}
-			entity = new InterpreterEntity();
-			entity.setLanguage(language);
-			entity.setBody(code);
-			entity.setCode(formattedCode);
 			entity.setResult(result.toString());
-			entity.setCreationDate(new Date());
+		}
+		else {
+			result.append("Exception: language "+language+" is not supported");
+			entity.setResult(result.toString());
+		}
+			
+			
 		return entity;
 	}
 
